@@ -130,7 +130,7 @@ X_test_std = sc.transform(X_test)
 
 
 
-ppn = Perceptron(eta0=0.1, random_state=1)
+ppn = Perceptron(eta0=0.001, random_state=1)
 ppn.fit(X_train_std, y_train)
 
 
@@ -314,7 +314,7 @@ class LogisticRegressionGD:
     b_ : Scalar
       Bias unit after fitting.
     losses_ : list
-      Log loss function values in each epoch.
+       Log loss function values in each epoch.
 
     """
     def __init__(self, eta=0.01, n_iter=50, random_state=1):
@@ -349,7 +349,7 @@ class LogisticRegressionGD:
             errors = (y - output)
             self.w_ += self.eta * X.T.dot(errors) / X.shape[0]
             self.b_ += self.eta * errors.mean()
-            loss = -y.dot(np.log(output)) - ((1 - y).dot(np.log(1 - output))) / X.shape[0]
+            loss = (-y.dot(np.log(output)) - (1 - y).dot(np.log(1 - output))) / X.shape[0]
             self.losses_.append(loss)
         return self
 
@@ -394,7 +394,7 @@ plt.show()
 
 
 
-lr = LogisticRegression(C=100.0, solver='lbfgs', multi_class='ovr')
+lr = LogisticRegression(C=1.0, solver='liblinear', multi_class='ovr')
 lr.fit(X_train_std, y_train)
 
 plot_decision_regions(X_combined_std, y_combined,
@@ -482,7 +482,7 @@ plt.show()
 
 
 
-svm = SVC(kernel='linear', C=1.0, random_state=1)
+svm = SVC(kernel='linear', C=0.01, random_state=1)
 svm.fit(X_train_std, y_train)
 
 plot_decision_regions(X_combined_std, 
